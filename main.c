@@ -20,39 +20,56 @@
 *                                                                             *
 ******************************************************************************/
 #include <stdio.h>
-#define ALPHABET 26
 
-void cesar(char texte[], int clef);
+int verificationCode (int clef);
+int verificationChiffrage(int chiffrage);
+int verificationCaracteresSpeciaux (char texte []);
 
 
-void main(){
-    char texte[] = "DAIZ";
-    cesar(texte, 2);
+void main () {
+
+         char texte[50];
+        int clef;
+        int chiffrage;
+
+        printf("Entrez votre message : \n");
+        scanf("%s",&texte);
+
+
+        printf("Entrez votre clef : \n");
+        scanf("%d",&clef);
+        while (verificationCode(clef) == -1) {
+                printf("Erreur dans la saisie de la clef ! \n\n");
+                printf("Entrez votre code et votre clef : \n");
+                scanf("%d",&clef);
+                printf("\n",clef);
+        }
+
+        printf("\n Voulez vous chifrer ou dechiffrer le message ? ( 1 pour Oui et -1 pour Non)\n ");
+        scanf("%d",&chiffrage);
+
+        while (verificationChiffrage(chiffrage) == -1) {
+                printf("Erreur veuillez reessayer : ");
+                scanf("%d",&chiffrage);
+        }
+
 }
-	
-void cesar(char texte[], int clef) {
 
-	char tab[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	int i = 0;
-	clef = clef % 26;
+int verificationCode (int clef) {
+        if (clef>26 || clef<1  ) {
+                return -1 ;
+        }
+        return 1;
+}
 
-	while(texte[i] != '\0'){
-		int f = 0;
-		
-		printf("i avant %c\n", texte[i]);
-		while(tab[f] != texte[i]){
-			f++;
-		}
-		
-		//if ( i + clef > ALPHABET ) {
-			texte[i] = tab[(f + clef - ALPHABET)];
-		 } else { 
-		 	texte[i] = tab[(f + clef)];
-		 }
-			
-		
-		printf("Voici %c\n", texte[i]);
-		i++;
-	}	
-	
+int verificationChiffrage (int chiffrage) {
+        if (chiffrage>1 || chiffrage<-1  ) {
+                return -1 ;
+        }
+        return 1;
+}
+
+
+int verificationCaracteresSpeciaux (char texte [] ) {
+
 }
