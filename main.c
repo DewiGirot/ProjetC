@@ -20,14 +20,14 @@
 *                                                                             *
 ******************************************************************************/
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <string.h>
 
-int verification (int c, int type);
+int verificationCode (int clef);
+int verificationChiffrage (int chiffrage);
 int verificationCaracteresSpeciaux (char texte []);
-void affichageVerification(int c, int type);
-char cesar (char texte[], int clef);
+void cesar (char texte[], int clef, int chiffrage);
 
 
 void main () {
@@ -35,57 +35,67 @@ void main () {
         char texte[100];
         int chiffrage;
         int clef;
-        int type;
 
         printf("Entrez votre message, attention il ne doit pas contenir des caractères spéciaux et ne pas doit dépasser les 100 caractères : \n     ");
         scanf("%s",&texte);
+        while (verificationCaracteresSpeciaux(texte) == 1) {
+        	printf("Erreur veuillez réessayer : \n     ");
+        	scanf("%s",&texte);
+        	printf("\n",texte);
+	}
         
 
         printf("Entrez votre clef : \n     ");
         scanf("%d",&clef);
-        affichageVerification(clef,26);
-        
-	while (verificationCaracteresSpeciaux(texte) == 1) {
-        	printf("Erreur, votre message possède des caractères spéciaux ! \n\n");
-        	printf("Entrez une nouveau message : \n");
-        	scanf("%s",&texte);
-        	printf("\n",texte);
+        while ( verificationCode(clef) == -1 ) {
+		printf("Erreur veuillez réessayer : \n     ");
+		scanf("%d",&clef);
 	}
-    
-        printf("Voulez vous chifrer ou dechiffrer le message ? ( 1 pour Oui et -1 pour Non)\n     ");
+	
+        printf("Voulez vous chifrer ou déchiffrer le message ? ( 1 pour chiffrer et 0 pour déchiffrer)\n     ");
         scanf("%d",&chiffrage);
-        affichageVerification(chiffrage,1);
+        while ( verificationChiffrage(chiffrage) == -1 ) {
+		printf("Erreur veuillez réessayer : \n     ");
+		scanf("%d",&chiffrage);
+	}
         
         printf("message : \n     ");
-        cesar(texte,3);
+        cesar(texte,clef,chiffrage);
         printf("%s\n",texte);
         
 
 }
 
-int verification (int c, int type) {
-        if (c>type || c<1  ) {
+int verificationCode (int clef) {
+        if (clef>26 || clef<1  ) {
                 return -1 ;
         }
         return 1;
 }
 
-void affichageVerification(int c, int type) {
-    while ( verification(c , type) == -1 ) {
-        printf("Erreur veuillez réessayer : \n");
-        scanf("%d",&c);
-    }
+int verificationChiffrage(int chiffrage) {
+	if (chiffrage == 1 || chiffrage == 0)  {
+		return 1;
+	}
+	return -1;
 }
 
-char cesar (char texte[],int clef) {
-    	for ( int i = 0 ; i < strlen(texte) ; i++ ) {
+
+void cesar (char texte[],int clef,int chiffrage) {
+    for(int i=0 ; i<strlen(texte) ; i++)
+    	if ( chiffrage == 1 )
+            texte[i] = 'a' + ((texte[i] - 'a') + clef)%26;
+            else 
+            	texte[i] = 'a' + ((texte[i] - 'a') - clef)%26;
+    
+    /*for ( int i = 0 ; i < strlen(texte) ; i++ ) {
        		texte[i] -= 'A';
        		printf("avant changement%d\n", texte[i]);		
        		texte[i] = (texte[i] + clef) %26 - 1;
        		texte[i] += 'A';
        		printf("après changement%d\n", texte[i]);
-    	}
-}
+    	}*/
+} 
 
 int verificationCaracteresSpeciaux (char texteATester[]) { 
 	for(int i = 0; i < strlen(texteATester); i++){
