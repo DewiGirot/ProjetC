@@ -66,8 +66,11 @@ void main () {
 
 }
 
+//Question sur les affichages dans les méthodes
+
 int verificationCode (int clef) {
         if (clef>26 || clef<1  ) {
+        //clef de 0 et clef de 26
                 return -1 ;
         }
         return 1;
@@ -85,17 +88,15 @@ void cesar (char texte[],int clef,int chiffrage) {
     for(int i=0 ; i<strlen(texte) ; i++)
     	if ( chiffrage == 1 )
             texte[i] = 'a' + ((texte[i] - 'a') + clef)%26;
-            else 
-            	texte[i] = 'a' + ((texte[i] - 'a') - clef)%26;
+        else {
+        	if(('a' + ((texte[i] - 'a') - clef)) < 'a')
+        		texte[i] = 'z' + 1 + ((texte[i] - 'a') - clef);
+        	else
+        		texte[i] = 'a' + ((texte[i] - 'a') - clef);
+        	
+        }   	
     
-    /*for ( int i = 0 ; i < strlen(texte) ; i++ ) {
-       		texte[i] -= 'A';
-       		printf("avant changement%d\n", texte[i]);		
-       		texte[i] = (texte[i] + clef) %26 - 1;
-       		texte[i] += 'A';
-       		printf("après changement%d\n", texte[i]);
-    	}*/
-} 
+}
 
 int verificationCaracteresSpeciaux (char texteATester[]) { 
 	for(int i = 0; i < strlen(texteATester); i++){
