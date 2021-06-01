@@ -66,11 +66,9 @@ void main () {
 
 }
 
-//Question sur les affichages dans les méthodes
 
 int verificationCode (int clef) {
         if (clef>26 || clef<1  ) {
-        //clef de 0 et clef de 26
                 return -1 ;
         }
         return 1;
