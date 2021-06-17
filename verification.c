@@ -16,57 +16,41 @@
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Nom du fichier :  main.c                                                   *
+*  Nom du fichier :  verification.c                                           *
 *                                                                             *
 ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include "cesar.h"
-#include "convertir.h"
 #include "verification.h"
 
-void main () {
+int verificationLongueurTexte(char texte[]){
+	if (strlen(texte) >= 100) {
+                return -1 ;
+        }
+        return 1;
+}
 
-        char texte[100];
-        int chiffrage;
-        int clef;
+int verificationCode (int clef) {
+        if (clef>25 || clef<1  ) {
+                return -1 ;
+        }
+        return 1;
+}
 
-        printf("Entrez votre message sans espace, attention il ne doit pas contenir des caractères spéciaux et ne pas doit dépasser les 100 caractères : \n     ");
-        scanf("%s",&texte);
-        
-        while (verificationLongueurTexte(texte) == -1) {
-        	printf("Erreur veuillez donnez un texte inférieur à 100 caractères : \n     ");
-        	scanf("%s",&texte);
+int verificationChiffrage(int chiffrage) {
+	if (chiffrage == 1 || chiffrage == 0)  {
+		return 1;
 	}
-	
-	printf("%s\n",texte);
-	convertirAccents(texte);
-	printf("%s\n",texte);
+	return -1;
+}
 
-        
-        while (verificationCaracteresSpeciaux(texte) == 1) {
-        	printf("Erreur veuillez entrer un texte sans caractères spéciaux : \n     ");
-        	scanf("%s",&texte);
+int verificationCaracteresSpeciaux (char texteATester[]) { 
+	for(int i = 0; i < strlen(texteATester); i++){
+		if(isalpha(texteATester[i]) == 0){
+			return 1;
+		}
 	}
-
-        printf("Entrez votre clef comprise entre 0 et 26 non compris : \n     ");
-        scanf("%d",&clef);
-        while ( verificationCode(clef) == -1 ) {
-		printf("Erreur veuillez réessayer : \n     ");
-		scanf("%d",&clef);
-	}
-	
-        printf("Voulez vous chifrer ou déchiffrer le message ? (1 pour chiffrer et 0 pour déchiffrer)\n     ");
-        scanf("%d",&chiffrage);
-        while ( verificationChiffrage(chiffrage) == -1 ) {
-		printf("Erreur veuillez saisir 1 pour chiffrer et 0 pour déchiffrer : \n     ");
-		scanf("%d",&chiffrage);
-	}
-        
-        printf("message : \n     ");
-        cesar(texte,clef,chiffrage);
-        printf("%s\n",texte);
-        
+	return 0;
 }
