@@ -16,72 +16,73 @@
 *                                                                             *
 *******************************************************************************
 *                                                                             *
-*  Nom du fichier :  convertir.c                                              *
+*  Nom du fichier :  main.c                                                   *
 *                                                                             *
 ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "cesar.h"
 #include "convertir.h"
+#include "verification.h"
 
-void convertirAccents (char texte[]) {
-	char Accents [] = 	"ÀÁÂÄÅàáâàäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ";
-	char SansAccents [] = 	"AAAAAaaaaaaOOOOOOooooooEEEEeeeeCcIIIIiiiiUUUUuuuuyNn";
-	for (int i=0 ; i<strlen(texte) ; i++) {
-		for (int l=0 ; l<strlen(Accents) ; l++) {
-			if (texte[i] == Accents[l])
-				texte[i] = SansAccents[l];
-			
-				/*switch(i)
-					{
-					case 0:case 1:case 2:case 3:case 4:case 5:
-						texte[i]='A';
-						break;
-					case 6:case 7:case 8:case 9:case 10:case 11:
-						texte[i]='a';
-						break;
-					case 12:case 13: case 14:case 15:case 16:case 17:
-						texte[i]='O';
-						break;
-					case 18:case 19: case 20:case 21:case 22:case 23:
-						texte[i]='o';
-						break;
-					case 24:case 25: case 26:case 27:
-						texte[i]='E';
-						break;
-					case 28:case 29: case 30:case 31:
-						texte[i]='e';
-						break;
-					case 32:
-						texte[i]='C';
-						break;
-					case 33:
-						texte[i]='C';
-						break;
-					case 34:case 35: case 36:case 37:
-						texte[i]='I';
-						break;
-					case 38:case 39: case 40:case 41:
-						texte[i]='i';
-						break;
-					case 42:case 43: case 44:case 45:
-						texte[i]='U';
-						break;
-					case 46:case 47: case 48:case 49:
-						texte[i]='u';
-						break;
-					case 50:
-						texte[i]='y';
-						break;
-					case 51:
-						texte[i]='N';
-						break;
-					case 52:
-						texte[i]='n';
-						break;
-				}*/			
-			
-		}
+void main () {
+
+        char texte[100];
+        int chiffrage;
+        int clef;
+
+        printf("Entrez votre message, attention il ne doit pas contenir des caractères spéciaux et ne pas doit dépasser les 100 caractères : \n     ");
+        fgets(texte,1024,stdin);
+        //scanf("%s",&texte);
+        
+        while (verificationLongueurTexte(texte) == -1) {
+        	printf("Erreur veuillez donnez un texte inférieur à 100 caractères : \n     ");
+        	scanf("%s",&texte);
 	}
+	
+	//convertirAccents(texte); ne marche pas
+        
+        while (verificationCaracteresSpeciaux(texte) == -1) {
+        	printf("Erreur veuillez entrer un texte sans caractères spéciaux : \n     ");
+        	scanf("%s",&texte);
+	}
+
+        printf("Entrez votre clef comprise entre 0 et 26 non compris : \n     ");
+        scanf("%d",&clef);
+        while ( verificationCode(clef) == -1 ) {
+		printf("Erreur veuillez réessayer : \n     ");
+		scanf("%d",&clef);
+	}
+	
+        printf("Voulez vous chifrer ou déchiffrer le message ? (1 pour chiffrer et 0 pour déchiffrer)\n     ");
+        scanf("%d",&chiffrage);
+        while ( verificationChiffrage(chiffrage) == -1 ) {
+		printf("Erreur veuillez saisir 1 pour chiffrer et 0 pour déchiffrer : \n     ");
+		scanf("%d",&chiffrage);
+	}
+        
+        char texte1[100]; // on sauvegarde le message original dans texte1
+        strcpy(texte1, texte);
+        printf("message : \n     ");
+        cesar(texte,clef,chiffrage);
+        printf("%s\n",texte);
+        
+        printf("Enregistrement des informations dans un txt\n");
+        FILE* fichier = NULL;
+    	fichier = fopen("enregistrement.txt", "a");
+    	//sauvegarde des différentes informations obtenu par l'utilisateur dans le fichier texte enregistrement
+                
+    	fprintf(fichier,"\n---------------------------\n");
+        fprintf(fichier," INFORMATIONS ENREGISTREES\n");
+    	fprintf(fichier,"---------------------------\n");
+       	fprintf(fichier,"\nMessage original : %s\n",texte1);
+       	fprintf(fichier,"Clef / décalage : %d\n",clef);
+       	if ( chiffrage == 1 ) 
+        	fprintf(fichier,"Le message a été coder\n");
+        else 
+        	fprintf(fichier,"Le message a été décoder\n");
+        fprintf(fichier,"Message obtenue : %s\n",texte);
+        
 }
