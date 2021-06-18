@@ -46,7 +46,7 @@ void cesar (char texte[],int clef,int chiffrage) {
 				else 
 					texte[i] = 'a' + ((texte[i] - 'a') - clef);
 			else if ('A' <= texte[i] && texte[i] <= 'Z'){
-				if(('A' + ((texte[i] - 'Z') - clef)) < 'A')
+				if(('A' + ((texte[i] - 'A') - clef)) < 'A')
 					texte[i] = 'Z' + 1 + ((texte[i] - 'A') - clef);
 				else
 					texte[i] = 'A' + ((texte[i] - 'A') - clef);

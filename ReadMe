@@ -1,0 +1,50 @@
+/******************************************************************************
+*  ASR => M2101                                                               *
+*******************************************************************************
+*                                                                             *
+*  N° de Sujet :    3                                                         *
+*                                                                             *
+*******************************************************************************
+*                                                                             *
+*  Intitulé :   Chiffrement de messages                                       *
+*                                                                             *
+*******************************************************************************
+*                                                                             *
+*  Nom-prénom1 : GIROT Déwi                                                   *
+*                                                                             *
+*  Nom-prénom2 :   BAUDRAND Paul-Alexandre                                    *
+*                                                                             *
+*******************************************************************************
+*                                                                             *
+*  Nom du fichier :  ReadMe                                                   *
+*                                                                             *
+******************************************************************************/
+
+Chiffrement de message
+
+L'application sert à chiffrer ou déchiffrer un court message ( 100 char max ) fournit par l'utilisateur ne comprenant ni espaces ni caractères spéciaux, à l'aide d'un algorithme s'inspirant de César. C'est à l'utilisateur de fournir le message, la clef et si il souhaite coder ou décoder.
+
+int verificationCode (int clef); 
+	// prend en entrée la clef fournit par l'utilisateur et renvoie -1 si celle ci est éronnée sinon 1
+
+int verificationLongueurTexte(char texte[]); 
+	// prend en entrée le texte fournit par l'utilisateur et renvoie -1 si celui-ci est >100 sinon 1
+
+int verificationChiffrage (int chiffrage); 
+	verifie que le paramètre d'entrée soit égal à 1 ou 0, renvoie 1 si c'est le cas ou -1
+
+int verificationCaracteresSpeciaux (char texte []); 
+	//prend en entrée le texte founit pas l'utilisateur, renvoie -1 si celui ci contient des caractères spéciaux (hors alphabet) sinon 1
+
+void convertirAccents (char texte []); 
+	//sert à modifier le texte fournit par l'utilisateur afin que celui ci puisse passer la vérification des caractères spéciaux
+
+void cesar (char texte[], int clef, int chiffrage); 
+	//algorithme qui prend en entrée le texte fournit par l'utilisateur, la clef fournit par l'utilisateur, et le chiffrage qui determine si l'utilisateur souhaite coder ou décoder son message
+
+Les cas d'erreurs : 
+	- pas d'espace dans le message fournit pas l'utilisateur
+	- un message fournit par l'utilisateur inférieur à 100 caractères
+	- une clef strictement comprise entre 0 et 26 
+	- un chiffrage égale à 0 ou 1 seulement
+	- un message ne comportant aucun caractères spéciaux

@@ -48,9 +48,9 @@ int verificationChiffrage(int chiffrage) {
 
 int verificationCaracteresSpeciaux (char texteATester[]) { 
 	for(int i = 0; i < strlen(texteATester); i++){
-		if(isalpha(texteATester[i]) == 0){
+		if(isalpha(texteATester[i]) || texteATester[i] != ' '){
 			return 1;
 		}
 	}
-	return 0;
+	return -1;
 }

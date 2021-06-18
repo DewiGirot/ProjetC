@@ -17,3 +17,4 @@ main: ${BINAIRES}
 clean:
 	rm main
 	rm *.o
+	rm enregistrement.txt
