@@ -24,6 +24,8 @@ Chiffrement de message
 
 L'application sert à chiffrer ou déchiffrer un court message ( 100 char max ) fournit par l'utilisateur, ne comprenant aucuns caractères spéciaux, à l'aide d'un algorithme s'inspirant de César. C'est à l'utilisateur de fournir le message, la clef et s'il souhaite coder ou décoder.
 
+Pour lancer l'application, taper les commandes "make all" et "./main". Pour supprimer tous les fichiers annexes ainsi que le fichier enregistrement.txt taper la commande "make clean".
+
 int verificationCode (int clef); 
 	// prend en entrée la clef fournit par l'utilisateur et renvoie -1 si celle ci est éronnée sinon 1
 
